@@ -41,3 +41,13 @@ flatten xs = helper xs [] where
     helper node acc = case node of
         Elem x -> x : acc
         List items -> foldr helper acc items
+
+compress :: Eq a => [a] -> [a]
+compress xs = case xs of
+    (x:y:ys) | x == y -> compress (y:ys)
+             | x /= y -> x : compress (y:ys)
+    [x] -> [x]
+    [] -> []
+
+pack :: Eq a => [a] -> [[a]]
+pack = undefined
