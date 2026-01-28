@@ -49,5 +49,28 @@ compress xs = case xs of
     [x] -> [x]
     [] -> []
 
+-- | Pack consecutive duplicates of list elements into sublists
+-- >>> pack []
+-- []
+-- >>> pack [5]
+-- [[5]]
+-- >>> pack "aaabbcccc"
+-- ["aaa","bb","cccc"]
 pack :: Eq a => [a] -> [[a]]
-pack = undefined
+-- pack xs = reverse $ helper xs [] where
+--     helper :: Eq a => [a] -> [[a]] -> [[a]]
+--     helper ys acc = case ys of
+--         [] -> acc
+--         [x] -> case acc of
+--             [] -> [[x]]
+--             (z:zs) -> if x == head z 
+--                 then (x:z):zs else z:zs
+--         (x:y:ys) -> case acc of
+--             [] -> helper (y:ys) [[x]]
+--             (z:zs) -> if x == head z 
+--                 then helper (y:ys) ((x:z):zs)
+--                 else helper (y:ys) ([x]:(z:zs))
+
+pack [] = []
+pack (x:xs) = (x : same) : pack rest
+    where (same, rest) = span (== x) xs
