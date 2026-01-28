@@ -71,6 +71,13 @@ pack :: Eq a => [a] -> [[a]]
 --                 then helper (y:ys) ((x:z):zs)
 --                 else helper (y:ys) ([x]:(z:zs))
 
+mySpan :: (a -> Bool) -> [a] -> ([a], [a])
+mySpan _ [] = ([], [])
+mySpan test_fn (x:xs)
+    | test_fn x = (x : yes, no)
+    | otherwise = ([], x:xs)
+    where (yes, no) = mySpan test_fn xs
+
 pack [] = []
 pack (x:xs) = (x : same) : pack rest
-    where (same, rest) = span (== x) xs
+    where (same, rest) = mySpan (== x) xs
