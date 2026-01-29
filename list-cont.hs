@@ -132,3 +132,17 @@ rotate xs n | n == 0 = xs
             | n > 0 = drop n xs ++ take n xs 
             | otherwise = drop (len + n) xs ++ take (len + n) xs
                 where len = length xs
+
+-- | Remove the K'th element from a list
+-- >>> removeAt 2 "abcd"
+-- ('b',"acd")
+
+removeAt :: Int -> [a] -> (a, [a])
+removeAt n xs
+    | n < 1 || n > length xs = error "Index out of bounds"
+    |otherwise = go 1 xs
+    where 
+        go i (x:xs) 
+            | i == n = (x, xs)
+            | otherwise = let (item, leftovers) = go (i+1) xs
+                        in (item, x:leftovers)
