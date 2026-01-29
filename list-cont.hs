@@ -76,3 +76,12 @@ dupli :: [a] -> [a]
 -- dupli = foldr (\x acc -> x:x:acc) []
 dupli = concatMap (replicate 2)
 
+-- | Replicate the elements of a list a given number of times. 
+-- >>> repli "abc" 3
+-- "aaabbbccc"
+repli :: [a] -> Int -> [a]
+repli xs n = concatMap (rep n) xs
+    where 
+        rep :: Int -> a -> [a]
+        rep 0 x = []
+        rep n x = x : rep (n - 1) x
