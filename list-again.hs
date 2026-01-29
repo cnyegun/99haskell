@@ -27,3 +27,20 @@ rndSelect xs k =  do
     let selected = xs !! idx
     rest <- rndSelect xs (k - 1)
     return (selected:rest)
+
+removeAt :: Int -> [a] -> [a]
+removeAt k xs = left ++ right
+  where (left, _:right) = splitAt k xs
+
+uniqueRndSelect :: [a] -> Int -> IO [a]
+uniqueRndSelect [] _ = return []
+uniqueRndSelect _ 0 = return []
+uniqueRndSelect xs k =  do
+    idx <- randomRIO (0, length xs - 1)
+    let selected = xs !! idx
+    let newList = removeAt idx xs
+    rest <- uniqueRndSelect newList (k - 1)
+    return (selected:rest)
+
+diffSelect :: Int -> Int -> IO [Int]
+diffSelect n m = uniqueRndSelect [1..m] n
