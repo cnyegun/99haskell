@@ -81,3 +81,9 @@ mySpan test_fn (x:xs)
 pack [] = []
 pack (x:xs) = (x : same) : pack rest
     where (same, rest) = mySpan (== x) xs
+
+-- | 
+-- >>> encode "aaaabccaadeeee"
+-- [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
+encode :: Eq a => [a] -> [(Int, a)]
+encode xs = map (\z -> (length z, head z)) (pack xs)
