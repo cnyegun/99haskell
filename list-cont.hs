@@ -85,3 +85,16 @@ repli xs n = concatMap (rep n) xs
         rep :: Int -> a -> [a]
         rep 0 x = []
         rep n x = x : rep (n - 1) x
+
+-- | Drop
+-- >>> dropEvery "abcdefghik" 3
+-- "abdeghk"
+dropEvery :: [a] -> Int -> [a]
+dropEvery xs n = go xs 1
+    where 
+        go :: [a] -> Int -> [a]
+        go [] _ = []
+        go (y:ys) i 
+            | i `mod` n /= 0 = y : go ys (i + 1)
+            | otherwise = go ys (i + 1)
+                                        
