@@ -44,3 +44,5 @@ uniqueRndSelect xs k =  do
 
 diffSelect :: Int -> Int -> IO [Int]
 diffSelect n m = uniqueRndSelect [1..m] n
+
+rndPermu xs = uniqueRndSelect xs (length xs)
