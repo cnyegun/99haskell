@@ -109,3 +109,14 @@ split [] _ = ([], [])
 split xs 0 = ([], xs)
 split (x:xs) n = (x:first, rest) 
     where (first, rest) = split xs (n - 1)
+
+-- | Extract a slice from a list given two range (inclusive)
+-- >>> slice "abcdefghik" 3 7
+-- "cdefg"
+
+slice :: [a] -> Int -> Int -> [a]
+
+slice [] _ _ = []
+slice _ _ 0 = []
+slice (x:xs) start end | start == 1 = x : slice xs 1 (end - 1)
+                       | otherwise = slice xs (start - 1) (end - 1)
