@@ -138,11 +138,18 @@ rotate xs n | n == 0 = xs
 -- ('b',"acd")
 
 removeAt :: Int -> [a] -> (a, [a])
-removeAt n xs
-    | n < 1 || n > length xs = error "Index out of bounds"
-    |otherwise = go 1 xs
-    where 
-        go i (x:xs) 
-            | i == n = (x, xs)
-            | otherwise = let (item, leftovers) = go (i+1) xs
-                        in (item, x:leftovers)
+-- removeAt n xs
+--     | n < 1 || n > length xs = error "Index out of bounds"
+--     |otherwise = go 1 xs
+--     where 
+--         go i (x:xs) 
+--             | i == n = (x, xs)
+--             | otherwise = let (item, leftovers) = go (i+1) xs
+--                         in (item, x:leftovers)
+
+removeAt n xs | n < 1 = error "Index out of bounds"
+removeAt _ [] = error "Index out of bounds"
+removeAt 1 (x:xs) = (x, xs)
+removeAt k (x:xs) = 
+    let (removed, rest) = removeAt (k - 1) xs
+    in (removed, x:rest)
