@@ -63,3 +63,16 @@ encodeDirect = foldr go []
         go x (Multiple n y : ys)
             | x == y = Multiple (n + 1) y : ys
             | otherwise = Single x : Multiple n y : ys
+
+-- | Duplicate the elements of a list
+-- >>> dupli []
+-- []
+-- >>> dupli [1]
+-- [1,1]
+-- >>> dupli [1,2,3]
+-- [1,1,2,2,3,3]
+
+dupli :: [a] -> [a]
+-- dupli = foldr (\x acc -> x:x:acc) []
+dupli = concatMap (replicate 2)
+
