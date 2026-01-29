@@ -120,3 +120,15 @@ slice [] _ _ = []
 slice _ _ 0 = []
 slice (x:xs) start end | start == 1 = x : slice xs 1 (end - 1)
                        | otherwise = slice xs (start - 1) (end - 1)
+
+-- | Rotate
+-- >>> rotate "abcdefgh" 3
+-- "defghabc"
+-- >>> rotate "abcdefgh" (-2)
+-- "ghabcdef"
+
+rotate :: [x] -> Int -> [x]
+rotate xs n | n == 0 = xs
+            | n > 0 = drop n xs ++ take n xs 
+            | otherwise = drop (len + n) xs ++ take (len + n) xs
+                where len = length xs
