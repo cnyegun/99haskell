@@ -1,4 +1,5 @@
 import Control.Monad (when)
+import Data.Bifunctor (first)
 data Item a = Single a | Multiple Int a deriving (Show, Eq)
 -- | 
 -- >>> encodeModified "aaaabccaadeeee"
@@ -98,3 +99,13 @@ dropEvery xs n = go xs 1
             | i `mod` n /= 0 = y : go ys (i + 1)
             | otherwise = go ys (i + 1)
                                         
+-- | Split in two path given the length of the first part
+-- >>> split "abcdefghik" 3
+-- ("abc","defghik")
+-- >>> split "abc" 6
+-- ("abc","")
+split :: [a] -> Int -> ([a], [a])
+split [] _ = ([], [])
+split xs 0 = ([], xs)
+split (x:xs) n = (x:first, rest) 
+    where (first, rest) = split xs (n - 1)
